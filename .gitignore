@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# Local environment
+venv/
+.venv/
+env/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Generated video files and temporary AI analysis
+downloads/*
+!downloads/.gitkeep
+!downloads/analysis/
+downloads/analysis/*
+!downloads/analysis/.gitkeep
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

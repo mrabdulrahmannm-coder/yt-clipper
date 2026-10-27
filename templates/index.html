@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cutline — YouTube Clip Studio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    :root { --ink:#f2f0e9; --muted:#9a9b91; --bg:#111311; --panel:#191c18; --line:#30352e; --lime:#d8f56a; --orange:#ff8b5a; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--bg); font-family:'Space Grotesk',sans-serif; min-height:100vh; }
+    body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.12; background-image:radial-gradient(#fff 0.6px,transparent .6px); background-size:5px 5px; }
+    .shell { max-width:1100px; margin:auto; padding:34px 28px 60px; position:relative; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom:70px; }
+    .brand { display:flex; align-items:center; gap:12px; font-size:18px; font-weight:700; letter-spacing:-.04em; }
+    .mark { width:27px; height:27px; background:var(--lime); color:#111; display:grid; place-items:center; font-family:'DM Mono'; font-size:12px; transform:rotate(-8deg); }
+    .live { color:var(--muted); font:11px 'DM Mono'; letter-spacing:.12em; text-transform:uppercase; } .live i { display:inline-block; width:6px; height:6px; margin-right:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 12px var(--lime); }
+    .intro { max-width:720px; margin-bottom:35px; } h1 { font-size:clamp(42px,7vw,76px); line-height:.94; letter-spacing:-.075em; margin:0 0 20px; font-weight:600; } h1 em { color:var(--lime); font-style:normal; } .intro p { color:var(--muted); font-size:16px; max-width:480px; line-height:1.55; margin:0; }
+    .workspace { display:grid; grid-template-columns:1.35fr .65fr; gap:14px; } .card { background:var(--panel); border:1px solid var(--line); padding:25px; }
+    .card-label { color:var(--muted); font:11px 'DM Mono'; letter-spacing:.13em; text-transform:uppercase; margin-bottom:22px; } label { display:block; font-size:12px; color:var(--muted); margin:18px 0 8px; }
+    input { width:100%; padding:14px 15px; border:1px solid var(--line); background:#101210; color:var(--ink); font:14px 'DM Mono'; outline:none; transition:.2s; } input:focus { border-color:var(--lime); box-shadow:0 0 0 3px #d8f56a12; } .times { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    button { width:100%; border:0; padding:16px; margin-top:23px; color:#111; background:var(--lime); font:600 14px 'Space Grotesk'; cursor:pointer; transition:.2s; } button:hover { background:#e9ff9b; transform:translateY(-2px); } button:disabled { opacity:.55; cursor:wait; transform:none; }
+    .side { display:flex; flex-direction:column; justify-content:space-between; } .tip { border-left:2px solid var(--orange); padding-left:16px; color:var(--muted); font-size:13px; line-height:1.55; } .tip strong { display:block; color:var(--ink); margin-bottom:8px; }
+    .status { min-height:42px; margin-top:18px; color:var(--muted); font:12px 'DM Mono'; line-height:1.5; } .status.ok { color:var(--lime); } .status.error { color:#ff927e; } .status.loading { color:var(--orange); }
+    .progress-wrap { margin-top:18px; } .progress-head { display:flex; justify-content:space-between; color:var(--muted); font:11px 'DM Mono'; margin-bottom:8px; } .progress-head strong { color:var(--lime); font-weight:500; } .progress { height:7px; border:1px solid var(--line); background:#101210; overflow:hidden; } .progress i { display:block; width:0%; height:100%; background:var(--lime); box-shadow:0 0 14px #d8f56a88; transition:width .45s ease-out; } .progress-wrap:after { content:""; display:block; width:100%; height:1px; margin-top:7px; background:linear-gradient(90deg,transparent,var(--lime),transparent); opacity:.35; animation:scan 1.35s linear infinite; } @keyframes scan { from { transform:translateX(-100%); } to { transform:translateX(100%); } }
+    .meta { border-top:1px solid var(--line); padding-top:18px; color:var(--muted); font:11px 'DM Mono'; line-height:1.8; } .meta span { color:var(--ink); }
+    @media (max-width:760px) { .shell{padding:24px 18px 40px} header{margin-bottom:55px} .workspace{grid-template-columns:1fr} .side{gap:35px} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><div class="brand"><div class="mark">CL</div> CUTLINE</div><a href="/editor" style="color:var(--lime);font:11px 'DM Mono';text-decoration:none;text-transform:uppercase">AI editor ↗</a></header>
+    <section class="intro"><h1>Turn long videos<br>into <em>sharp cuts.</em></h1><p>Ambil momen terbaik dari video YouTube. Tentukan rentang waktunya, lalu unduh klip MP4 siap pakai.</p></section>
+    <section class="workspace">
+      <form id="clipForm" class="card">
+        <div class="card-label">01 / Source & timing</div>
+        <label for="url">YouTube URL</label><input type="url" id="url" required placeholder="https://youtube.com/watch?v=..." autocomplete="url">
+        <div style="color:var(--muted);font:11px 'DM Mono';margin-top:8px">Salin URL langsung dari browser. Jangan gunakan URL yang mengandung spasi.</div>
+        <div class="times"><div><label for="startTime">Start</label><input type="text" id="startTime" required value="00:00" placeholder="MM:SS"></div><div><label for="endTime">End</label><input type="text" id="endTime" required value="01:00" placeholder="MM:SS"></div></div>
+        <button type="submit" id="submitBtn">GENERATE CLIP <span>↗</span></button>
+        <div id="status" class="status" role="status"></div>
+        <div id="progressWrap" class="progress-wrap" hidden>
+          <div class="progress-head"><span id="progressStage">MENYIAPKAN</span><strong id="progressValue">0%</strong></div>
+          <div id="progress" class="progress"><i id="progressBar"></i></div>
+        </div>
+      </form>
+      <aside class="card side"><div><div class="card-label">02 / Workflow note</div><div class="tip"><strong>Keep it focused.</strong>Untuk hasil cepat, gunakan rentang 30–90 detik dan pastikan FFmpeg sudah terpasang di komputer server.</div></div><div class="meta">OUTPUT <span>MP4 / H.264</span><br>PROCESSING <span>LOCAL SERVER</span><br>FORMAT <span>READY TO SHARE</span></div></aside>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('clipForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn'), status = document.getElementById('status');
+      const progressWrap = document.getElementById('progressWrap');
+      const progressBar = document.getElementById('progressBar');
+      const progressValue = document.getElementById('progressValue');
+      const progressStage = document.getElementById('progressStage');
+      const stages = [
+        [12, 'MENYIAPKAN'],
+        [32, 'MENGHUBUNGI YOUTUBE'],
+        [58, 'MENGUNDUH VIDEO'],
+        [78, 'MEMOTONG KLIP'],
+        [91, 'MERENDER MP4']
+      ];
+      let progressTimer;
+      const setProgress = (value, stage) => {
+        progressBar.style.width = `${value}%`;
+        progressValue.innerText = `${value}%`;
+        progressStage.innerText = stage;
+      };
+      btn.disabled = true;
+      btn.innerText = 'PROCESSING...';
+      status.className = 'status loading';
+      status.innerText = 'Sedang mengunduh video dan merender klip...';
+      progressWrap.hidden = false;
+      setProgress(5, 'MENYIAPKAN');
+      let stageIndex = 0;
+      progressTimer = setInterval(() => {
+        if (stageIndex >= stages.length) return;
+        const [value, stage] = stages[stageIndex++];
+        setProgress(value, stage);
+      }, 1800);
+
+      try {
+        const response = await fetch('/api/cut', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url: document.getElementById('url').value,
+            start_time: document.getElementById('startTime').value,
+            end_time: document.getElementById('endTime').value
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.details ? `${errData.error} ${errData.details}` : (errData.error || 'Gagal memotong video.'));
+        }
+
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'youtube_clip.mp4';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        clearInterval(progressTimer);
+        setProgress(100, 'SELESAI');
+        status.className = 'status ok';
+        status.innerText = '✓ Klip berhasil dibuat dan diunduh.';
+      } catch (err) {
+        clearInterval(progressTimer);
+        status.className = 'status error';
+        status.innerText = '× ' + err.message;
+      } finally {
+        setTimeout(() => { progressWrap.hidden = true; }, 900);
+        btn.disabled = false;
+        btn.innerHTML = 'GENERATE CLIP <span>↗</span>';
+      }
+    });
+  </script>
+</body>
+</html>
