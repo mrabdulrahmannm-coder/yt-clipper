@@ -1,41 +1,40 @@
 # Cutline — AI Video Clipper
 
-Cutline adalah aplikasi web lokal untuk mengubah video panjang menjadi klip
-short-form untuk TikTok, Instagram Reels, dan YouTube Shorts.
+**Cutline** adalah aplikasi web lokal berbasis AI untuk mengubah video berdurasi panjang menjadi klip *short-form* yang siap ditinjau dan diekspor untuk TikTok, Instagram Reels, dan YouTube Shorts.
 
-Aplikasi ini menggunakan Flask sebagai backend, FFmpeg untuk pemrosesan video,
-dan Whisper lokal untuk membaca ucapan serta mencari kandidat hook.
+Aplikasi ini menggunakan Flask sebagai backend, FFmpeg untuk pemrosesan video, serta Whisper lokal untuk mentranskripsikan ucapan dan menemukan kandidat *hook*.
 
-## Fitur
+## ✨ Fitur Utama
 
-- Memotong video YouTube berdasarkan URL dan timestamp.
-- Upload video lokal melalui halaman AI Editor.
-- Deteksi ucapan menggunakan `faster-whisper`.
-- Pemilihan satu kandidat hook terbaik.
-- Alur analisis dan persetujuan sebelum render final.
-- Subtitle otomatis berbasis timestamp kata.
-- Format vertikal 9:16 dengan background blur agar video landscape tidak
-  terpotong secara ekstrem.
-- Hook text pada awal video.
-- CTA pada akhir video.
-- Normalisasi audio sekitar -14 LUFS.
-- Export MP4 H.264 dengan resolusi 1080x1920.
-- Preview video hasil edit langsung dari browser.
-- Download hasil edit.
-- Animasi upload dan progress proses.
-- Campaign brief yang dapat diubah dari halaman editor.
+- **YouTube Clipper:** Memotong video YouTube berdasarkan URL dan timestamp.
+- **Upload Video Lokal:** Mengunggah video melalui halaman AI Editor.
+- **AI Speech Detection:** Mendeteksi ucapan menggunakan `faster-whisper`.
+- **Hook Selection:** Memilih satu kandidat hook terbaik berdasarkan hasil analisis.
+- **Review Before Render:** Menyediakan tahap analisis dan persetujuan sebelum rendering final.
+- **Automatic Subtitles:** Membuat subtitle otomatis berdasarkan timestamp kata.
+- **Vertical Video Format:** Mengubah video menjadi format vertikal 9:16 dengan background blur agar video landscape tetap terlihat tanpa crop ekstrem.
+- **Hook Text:** Menampilkan teks hook pada awal video.
+- **Call to Action (CTA):** Menambahkan CTA pada akhir video.
+- **Audio Normalization:** Menormalisasi audio ke sekitar -14 LUFS.
+- **High-Resolution Export:** Mengekspor video MP4 H.264 dengan resolusi 1080 × 1920.
+- **Browser Preview:** Memutar preview video hasil edit langsung dari browser.
+- **Download Result:** Mengunduh video hasil rendering.
+- **Upload Progress:** Menampilkan animasi upload dan progres pemrosesan.
+- **Campaign Brief:** Mengatur instruksi editing melalui panel yang dapat diubah pada halaman editor.
 
-## Teknologi
+## 🛠️ Teknologi
 
-- Python 3.13
-- Flask
-- `yt-dlp`
-- `faster-whisper`
-- FFmpeg
-- Node.js sebagai JavaScript runtime untuk ekstraksi YouTube
-- HTML, CSS, dan JavaScript tanpa framework frontend
+| Teknologi | Fungsi |
+|---|---|
+| Python 3.13 | Bahasa pemrograman utama |
+| Flask | Backend dan API |
+| `yt-dlp` | Ekstraksi video YouTube |
+| `faster-whisper` | Transkripsi ucapan dan analisis kandidat hook |
+| FFmpeg | Pemotongan, rendering, dan encoding video |
+| Node.js | JavaScript runtime untuk workflow ekstraksi YouTube |
+| HTML, CSS, JavaScript | Antarmuka frontend tanpa framework |
 
-## Struktur Project
+## 📁 Struktur Project
 
 ```text
 yt-clipper/
@@ -49,17 +48,20 @@ yt-clipper/
 └── venv/
 ```
 
-### File penting
+### File dan Folder Penting
 
-- `app.py` — Flask application, API, analisis Whisper, dan pipeline FFmpeg.
-- `templates/index.html` — halaman manual YouTube clipper.
-- `templates/editor.html` — halaman AI Editor untuk upload dan review hasil.
-- `requirements.txt` — dependency Python.
-- `downloads/` — penyimpanan sementara dan hasil video.
+- `app.py` — Aplikasi Flask, endpoint API, analisis Whisper, dan pipeline FFmpeg.
+- `templates/index.html` — Halaman manual YouTube clipper.
+- `templates/editor.html` — Halaman AI Editor untuk upload video dan review hasil analisis.
+- `requirements.txt` — Daftar dependency Python.
+- `downloads/` — Penyimpanan sementara dan hasil video.
+- `venv/` — Virtual environment Python.
 
-## Persyaratan Sistem
+> **Catatan:** Folder `venv/` biasanya tidak perlu dimasukkan ke repository Git. Virtual environment dapat dibuat kembali melalui proses instalasi.
 
-Pastikan tersedia:
+## 💻 Persyaratan Sistem
+
+Pastikan perangkat memiliki:
 
 - Windows 10 atau Windows 11.
 - Python 3.10 atau lebih baru.
@@ -67,82 +69,93 @@ Pastikan tersedia:
 - Node.js.
 - Koneksi internet saat pertama kali mengunduh model Whisper.
 
-FFmpeg dan Node.js dibutuhkan untuk workflow yang berbeda:
+FFmpeg dan Node.js digunakan untuk kebutuhan yang berbeda:
 
-- FFmpeg digunakan untuk membaca, memotong, merender, dan meng-encode video.
-- Node.js membantu `yt-dlp` menangani ekstraksi YouTube.
+- **FFmpeg** digunakan untuk membaca, memotong, merender, dan melakukan encoding video.
+- **Node.js** membantu `yt-dlp` menangani proses ekstraksi YouTube pada workflow yang memerlukannya.
 
-## Instalasi
+## 🚀 Instalasi
 
-Masuk ke folder project:
+### 1. Masuk ke Folder Project
+
+Buka PowerShell, kemudian jalankan:
 
 ```powershell
 cd D:\ABDUL\xampp\htdocs\yt-clipper
 ```
 
-Jika virtual environment belum ada:
+Sesuaikan path tersebut jika folder project berada di lokasi lain.
+
+### 2. Buat Virtual Environment
+
+Jika virtual environment belum tersedia:
 
 ```powershell
 python -m venv venv
 ```
 
-Aktifkan virtual environment:
+### 3. Aktifkan Virtual Environment
 
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-Install dependency:
+Jika PowerShell menolak menjalankan script aktivasi, kamu dapat menggunakan Python langsung melalui `venv\Scripts\python.exe` tanpa aktivasi.
+
+### 4. Install Dependency Python
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Install FFmpeg jika belum ada:
+### 5. Install FFmpeg
+
+Jika FFmpeg belum tersedia, jalankan:
 
 ```powershell
 winget install --id Gyan.FFmpeg.Shared --exact --source winget
 ```
 
-Node.js dapat dipasang melalui:
+### 6. Install Node.js
+
+Jika Node.js belum tersedia, jalankan:
 
 ```powershell
 winget install OpenJS.NodeJS.LTS
 ```
 
-Setelah instalasi FFmpeg atau Node.js, tutup dan buka kembali terminal agar
-perubahan PATH terbaca.
+Setelah instalasi FFmpeg atau Node.js, tutup dan buka kembali terminal agar perubahan `PATH` dapat terbaca.
 
-## Menjalankan Aplikasi
+## ▶️ Menjalankan Aplikasi
+
+Masuk ke direktori project:
 
 ```powershell
 cd D:\ABDUL\xampp\htdocs\yt-clipper
+```
+
+Jalankan server Flask:
+
+```powershell
 .\venv\Scripts\python.exe app.py
 ```
 
-Buka halaman berikut di browser:
+Setelah server berjalan, buka aplikasi melalui browser.
 
-```text
-http://localhost:5000
-```
+| Halaman | URL |
+|---|---|
+| Manual YouTube Clipper | `http://localhost:5000` |
+| AI Editor | `http://localhost:5000/editor` |
 
-Halaman AI Editor:
+Untuk menghentikan server, tekan `CTRL + C` pada terminal tempat aplikasi berjalan.
 
-```text
-http://localhost:5000/editor
-```
+## 🎬 Workflow AI Editor
 
-Untuk menghentikan server:
+### 1. Upload Video
 
-```text
-CTRL + C
-```
+Buka halaman `/editor`, lalu pilih video dari perangkat atau gunakan fitur drag-and-drop.
 
-## Workflow AI Editor
-
-### 1. Upload
-
-Buka `/editor`, lalu pilih atau drag-and-drop video. Format yang didukung:
+Format video yang didukung:
 
 - MP4
 - MOV
@@ -151,61 +164,66 @@ Buka `/editor`, lalu pilih atau drag-and-drop video. Format yang didukung:
 - AVI
 - M4V
 
-Ukuran upload maksimal adalah 500 MB.
+Ukuran maksimum file upload adalah **500 MB**.
 
-### 2. Analisis
+### 2. Analisis Video
 
-Whisper lokal akan:
+Whisper lokal menjalankan proses analisis untuk:
 
-1. Membaca audio video.
-2. Membuat transkrip dengan timestamp.
+1. Membaca audio dari video.
+2. Membuat transkrip beserta timestamp.
 3. Mencari kalimat yang memiliki sinyal hook.
-4. Memberikan kandidat dengan skor viralitas.
-5. Menampilkan timestamp, durasi, hook, dan alasan pemilihan.
+4. Memberikan kandidat beserta skor viralitas.
+5. Menampilkan timestamp, durasi, teks hook, dan alasan pemilihan kandidat.
 
-### 3. Review
+### 3. Review Kandidat
 
-Aplikasi menampilkan satu kandidat hook terlebih dahulu. Video belum dirender
-sebagai hasil final pada tahap ini.
+Aplikasi menampilkan satu kandidat hook terlebih dahulu. Pada tahap ini, video belum dirender sebagai hasil final sehingga pengguna dapat meninjau hasil analisis sebelum melanjutkan.
 
-### 4. Approve dan render
+### 4. Approve dan Render
 
-Klik **APPROVE & RENDER CLIP** untuk membuat satu video final. Output meliputi:
+Klik **APPROVE & RENDER CLIP** untuk memulai proses pembuatan satu video final.
 
-- Satu klip terbaik.
-- Format 9:16.
-- Video sumber tetap terlihat utuh di atas background blur.
+Hasil rendering mencakup:
+
+- Satu klip terbaik berdasarkan analisis.
+- Format video vertikal 9:16.
+- Video sumber tetap terlihat di atas background blur.
 - Subtitle otomatis.
-- Hook text maksimal delapan kata di awal.
+- Hook text maksimal delapan kata pada awal video.
 - CTA pada bagian akhir.
-- Audio AAC 192 kbps pada 48 kHz.
+- Audio AAC 192 kbps dengan sample rate 48 kHz.
 - Video H.264 dengan bitrate target sekitar 10 Mbps.
 
-Model Whisper default yang dipakai adalah `base`. Pada proses pertama, model
-akan diunduh dan proses dapat berlangsung lebih lama.
+Model Whisper default yang digunakan adalah `base`. Pada penggunaan pertama, model akan diunduh sehingga proses analisis dapat memerlukan waktu lebih lama.
 
-## Mengganti Model Whisper
+## 🧠 Mengganti Model Whisper
 
-Model dapat diubah menggunakan environment variable:
+Model Whisper dapat diganti menggunakan environment variable `CUTLINE_WHISPER_MODEL`.
+
+Contoh untuk menggunakan model `small`:
 
 ```powershell
 $env:CUTLINE_WHISPER_MODEL="small"
 .\venv\Scripts\python.exe app.py
 ```
 
-Pilihan umum:
+### Perbandingan Model
 
-| Model | Kecepatan | Akurasi |
-|---|---:|---:|
-| `tiny` | Paling cepat | Rendah |
-| `base` | Seimbang | Baik untuk penggunaan umum |
-| `small` | Lebih lambat | Lebih akurat |
-| `medium` | Paling berat | Lebih akurat, membutuhkan resource besar |
+| Model | Kecepatan Relatif | Karakteristik |
+|---|---|---|
+| `tiny` | Paling cepat | Akurasi relatif rendah |
+| `base` | Seimbang | Cocok untuk penggunaan umum |
+| `small` | Lebih lambat | Berpotensi lebih akurat |
+| `medium` | Paling berat di antara pilihan ini | Membutuhkan resource lebih besar dan dapat memberikan hasil transkripsi lebih akurat |
 
-## Campaign Brief
+Kecepatan dan akurasi aktual bergantung pada perangkat, bahasa, kualitas audio, serta karakteristik video.
 
-Panel **Campaign Brief** tersedia pada halaman `/editor`. Panel ini digunakan
-untuk menjelaskan aturan editing, misalnya:
+## 📋 Campaign Brief
+
+Panel **Campaign Brief** tersedia pada halaman `/editor` dan digunakan untuk mengatur instruksi editing sesuai kebutuhan campaign.
+
+Parameter yang dapat dijelaskan meliputi:
 
 - Platform tujuan.
 - Bahasa subtitle.
@@ -217,29 +235,44 @@ untuk menjelaskan aturan editing, misalnya:
 - Format output.
 - Aturan caption dan hashtag.
 
-Aturan campaign sebaiknya ditulis secara eksplisit. Contoh:
+### Contoh Campaign Brief
 
 ```text
 MODE: AUTO
 JUMLAH KLIP: 1
 DURASI: 30-60 detik
-WAJIB: hook kuat dalam 3 detik pertama, subtitle maksimal 2 baris
-DILARANG: crop wajah, klaim palsu, watermark pihak lain
-TEKNIS: MP4 H.264, 1080x1920, 30 fps
-POSTING: buat caption dan hashtag sesuai isi video
+
+WAJIB:
+- Hook kuat dalam 3 detik pertama.
+- Subtitle maksimal 2 baris.
+
+DILARANG:
+- Crop wajah.
+- Klaim palsu.
+- Watermark pihak lain.
+
+TEKNIS:
+- Format MP4 H.264.
+- Resolusi 1080x1920.
+- Frame rate 30 fps.
+
+POSTING:
+- Buat caption dan hashtag sesuai isi video.
 ```
 
-## API
+Tuliskan aturan campaign secara eksplisit agar instruksi lebih mudah dipahami. Efektivitas setiap aturan tetap bergantung pada bagaimana pipeline aplikasi memproses `campaign_rules`.
 
-### Health check
+## 🔌 API Reference
+
+### 1. Health Check
 
 ```http
 GET /api/health
 ```
 
-Memeriksa status FFmpeg, `yt-dlp`, dan JavaScript runtime.
+Memeriksa status komponen yang digunakan aplikasi, termasuk FFmpeg, `yt-dlp`, dan JavaScript runtime.
 
-### Analisis video
+### 2. Analisis Video
 
 ```http
 POST /api/analyze-video
@@ -256,16 +289,16 @@ platform
 clip_count
 ```
 
-Respons berisi `job_id` dan kandidat hook.
+Respons menyediakan `job_id` dan kandidat hook berdasarkan hasil analisis.
 
-### Render hasil
+### 3. Render Hasil Edit
 
 ```http
 POST /api/render-edit
 Content-Type: application/json
 ```
 
-Body:
+Contoh request body:
 
 ```json
 {
@@ -273,26 +306,32 @@ Body:
 }
 ```
 
-### Preview hasil
+Endpoint ini digunakan untuk memulai rendering berdasarkan hasil analisis yang telah disetujui.
+
+### 4. Preview Video
 
 ```http
 GET /api/preview/<filename>
 ```
 
-### Download hasil
+Digunakan untuk menampilkan video hasil rendering melalui browser.
+
+### 5. Download Video
 
 ```http
 GET /api/download/<filename>
 ```
 
-### Manual YouTube clipping
+Digunakan untuk mengunduh file video hasil rendering.
+
+### 6. Manual YouTube Clipping
 
 ```http
 POST /api/cut
 Content-Type: application/json
 ```
 
-Body:
+Contoh request body:
 
 ```json
 {
@@ -302,73 +341,72 @@ Body:
 }
 ```
 
-## Troubleshooting
+Endpoint ini digunakan untuk memotong video YouTube berdasarkan waktu mulai dan waktu selesai.
 
-### FFmpeg belum ditemukan
+> **Catatan API:** Format di atas merangkum endpoint dan field yang tercantum dalam dokumentasi project. Skema respons lengkap, autentikasi, validasi input, serta format error perlu diperiksa langsung pada implementasi `app.py`.
 
-Periksa status:
+## 🧰 Troubleshooting
+
+### FFmpeg Tidak Ditemukan
+
+Periksa apakah aplikasi dapat menemukan executable FFmpeg:
 
 ```powershell
 .\venv\Scripts\python.exe -c "import sys; sys.path.insert(0, '.'); import app; print(app.find_ffmpeg())"
 ```
 
-Jika hasilnya `None`, pasang FFmpeg:
+Jika hasilnya `None`, instal FFmpeg:
 
 ```powershell
 winget install --id Gyan.FFmpeg.Shared --exact --source winget
 ```
 
-Restart terminal dan server setelah instalasi.
+Setelah instalasi, buka ulang terminal dan restart server Flask.
 
-### Model Whisper belum tersedia
+### Model Whisper Belum Tersedia
 
-Jalankan server dan upload video. Model `base` akan diunduh otomatis pada
-analisis pertama. Pastikan koneksi internet tersedia.
+Jalankan server, lalu upload video melalui AI Editor. Model `base` akan diunduh secara otomatis saat analisis pertama apabila implementasi aplikasi menggunakan mekanisme tersebut.
 
-### Video tidak memiliki ucapan
+Pastikan koneksi internet tersedia dan ruang penyimpanan mencukupi.
 
-Whisper membutuhkan suara atau ucapan manusia untuk mencari hook. Video tanpa
-dialog dapat menghasilkan pesan:
+### Video Tidak Memiliki Ucapan
+
+Whisper digunakan untuk membaca ucapan dan mencari kandidat hook berbasis transkrip. Video tanpa dialog dapat menghasilkan pesan:
 
 ```text
 Suara atau ucapan tidak terdeteksi pada video.
 ```
 
-Gunakan video dengan percakapan atau ubah pipeline agar memilih momen berbasis
-scene/audio tanpa transkripsi.
+Untuk mendukung video tanpa dialog, pipeline dapat dikembangkan dengan pemilihan momen berbasis perubahan scene atau karakteristik audio tanpa transkripsi.
 
-### Error subtitle atau path Windows
+### Error Subtitle atau Path Windows
 
-Pastikan server menggunakan `app.py` terbaru dan restart Flask. Pipeline sudah
-menggunakan path subtitle relatif agar drive letter Windows tidak dibaca sebagai
-opsi FFmpeg.
+Pastikan server menjalankan `app.py` versi terbaru, kemudian restart Flask.
 
-### Video YouTube tidak tersedia
+Pipeline yang didokumentasikan menggunakan path subtitle relatif agar drive letter Windows tidak ditafsirkan sebagai opsi FFmpeg.
 
-Pastikan:
+### Video YouTube Tidak Tersedia
 
-- URL tidak mengandung spasi.
-- Video bersifat publik.
-- Video tidak dihapus atau private.
-- Node.js tersedia.
-- `yt-dlp` sudah terpasang di virtual environment.
+Periksa hal-hal berikut:
 
-## Catatan Pengembangan
+- URL tidak mengandung spasi atau karakter yang tidak diperlukan.
+- Video dapat diakses dan bukan video privat yang tidak memiliki izin akses.
+- Video tidak dihapus oleh pemiliknya atau oleh platform.
+- Node.js tersedia apabila dibutuhkan oleh workflow ekstraksi.
+- `yt-dlp` telah terpasang pada virtual environment yang digunakan aplikasi.
 
-- Folder `downloads/` berisi file sementara dan hasil render. Jangan menghapus
-  file yang sedang digunakan oleh proses aktif.
-- File asli upload tidak ditimpa; proses menggunakan file sumber sementara.
-- Beberapa hasil lama dapat tetap berada di `downloads/` jika proses dihentikan
-  sebelum cleanup selesai.
-- Face tracking, B-roll otomatis, musik latar berlisensi, dan SFX belum menjadi
-  bagian penuh dari pipeline lokal saat ini.
-- Hasil AI tetap perlu direview manusia sebelum dipublikasikan, terutama untuk
-  akurasi subtitle, konteks hook, framing, dan klaim pada caption.
+Jika masalah berlanjut, periksa pesan error dari `yt-dlp` untuk mengetahui penyebab spesifiknya.
 
-## Lisensi dan Penggunaan Konten
+## 📝 Catatan Pengembangan
 
-Gunakan hanya video, audio, musik, logo, dan aset yang kamu miliki atau memang
-memiliki izin untuk diproses dan dipublikasikan. Aplikasi ini tidak memberikan
-izin atas konten YouTube atau aset pihak ketiga.
-#   y t - c l i p p e r  
- 
+- Folder `downloads/` digunakan untuk menyimpan file sementara dan hasil rendering. Jangan menghapus file yang sedang digunakan proses aktif.
+- File asli yang diunggah tidak ditimpa; pipeline menggunakan file sumber sementara.
+- Hasil lama dapat tetap tersimpan di `downloads/` jika proses berhenti sebelum cleanup selesai.
+- Face tracking, B-roll otomatis, musik latar berlisensi, dan SFX belum menjadi bagian penuh dari pipeline lokal saat ini.
+- Hasil AI tetap perlu ditinjau manusia sebelum dipublikasikan, terutama untuk akurasi subtitle, konteks hook, framing, dan klaim pada caption.
+
+## ⚖️ Lisensi dan Penggunaan Konten
+
+Gunakan hanya video, audio, musik, logo, dan aset lain yang kamu miliki atau yang penggunaannya telah mendapatkan izin yang sesuai.
+
+Cutline merupakan alat pemrosesan video dan tidak memberikan hak atau izin atas konten YouTube maupun aset milik pihak ketiga. Pengguna bertanggung jawab memastikan bahwa pemrosesan, pengunduhan, pengeditan, dan publikasi konten mematuhi ketentuan platform serta hak cipta yang berlaku.
